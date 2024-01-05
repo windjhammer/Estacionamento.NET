@@ -1,67 +1,77 @@
+// Arquivo: Estacionamento.cs
+using System;
+using System.Collections.Generic;
+
 namespace DesafioFundamentos.Models
 {
+    public class Veiculo
+    {
+        public string Placa { get; set; }
+
+        public override string ToString()
+        {
+            return $"Placa: {Placa}";
+        }
+    }
+
     public class Estacionamento
     {
-        private decimal precoInicial = 0;
-        private decimal precoPorHora = 0;
-        private List<string> veiculos = new List<string>();
+        private decimal precoInicial;
+        private decimal precoPorHora;
+        private List<Veiculo> veiculos;
 
         public Estacionamento(decimal precoInicial, decimal precoPorHora)
         {
             this.precoInicial = precoInicial;
             this.precoPorHora = precoPorHora;
+            this.veiculos = new List<Veiculo>();
         }
 
         public void AdicionarVeiculo()
         {
-            // TODO: Pedir para o usuário digitar uma placa (ReadLine) e adicionar na lista "veiculos"
-            // *IMPLEMENTE AQUI*
-            Console.WriteLine("Digite a placa do veículo para estacionar:");
+            Console.WriteLine("Digite a placa do veículo:");
+            string placa = Console.ReadLine();
+
+            Veiculo novoVeiculo = new Veiculo
+            {
+                Placa = placa
+            };
+
+            veiculos.Add(novoVeiculo);
+            Console.WriteLine("Veículo cadastrado com sucesso!");
         }
 
         public void RemoverVeiculo()
         {
-            Console.WriteLine("Digite a placa do veículo para remover:");
+            Console.WriteLine("Digite a placa do veículo a ser removido:");
+            string placa = Console.ReadLine();
 
-            // Pedir para o usuário digitar a placa e armazenar na variável placa
-            // *IMPLEMENTE AQUI*
-            string placa = "";
+            Veiculo veiculoParaRemover = veiculos.Find(v => v.Placa.Equals(placa, StringComparison.OrdinalIgnoreCase));
 
-            // Verifica se o veículo existe
-            if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
+            if (veiculoParaRemover != null)
             {
-                Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
-
-                // TODO: Pedir para o usuário digitar a quantidade de horas que o veículo permaneceu estacionado,
-                // TODO: Realizar o seguinte cálculo: "precoInicial + precoPorHora * horas" para a variável valorTotal                
-                // *IMPLEMENTE AQUI*
-                int horas = 0;
-                decimal valorTotal = 0; 
-
-                // TODO: Remover a placa digitada da lista de veículos
-                // *IMPLEMENTE AQUI*
-
-                Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}");
+                veiculos.Remove(veiculoParaRemover);
+                Console.WriteLine("Veículo removido com sucesso!");
             }
             else
             {
-                Console.WriteLine("Desculpe, esse veículo não está estacionado aqui. Confira se digitou a placa corretamente");
+                Console.WriteLine("Veículo não encontrado.");
             }
         }
 
         public void ListarVeiculos()
         {
-            // Verifica se há veículos no estacionamento
-            if (veiculos.Any())
+            Console.WriteLine("Lista de Veículos:");
+            foreach (Veiculo veiculo in veiculos)
             {
-                Console.WriteLine("Os veículos estacionados são:");
-                // TODO: Realizar um laço de repetição, exibindo os veículos estacionados
-                // *IMPLEMENTE AQUI*
+                Console.WriteLine(veiculo);
             }
-            else
-            {
-                Console.WriteLine("Não há veículos estacionados.");
-            }
+        }
+
+        public decimal CalcularCustoEstacionamento(int horasEstacionado)
+        {
+            return precoInicial + (precoPorHora * horasEstacionado);
         }
     }
 }
+
