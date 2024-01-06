@@ -1,4 +1,3 @@
-// Arquivo: Estacionamento.cs
 using System;
 using System.Collections.Generic;
 
@@ -7,10 +6,11 @@ namespace DesafioFundamentos.Models
     public class Veiculo
     {
         public string Placa { get; set; }
+        public string Modelo { get; set; }
 
         public override string ToString()
         {
-            return $"Placa: {Placa}";
+            return $"{Modelo} Placa: {Placa}";
         }
     }
 
@@ -32,9 +32,13 @@ namespace DesafioFundamentos.Models
             Console.WriteLine("Digite a placa do veículo:");
             string placa = Console.ReadLine();
 
+            Console.WriteLine("Digite o modelo do veículo:");
+            string modelo = Console.ReadLine();
+
             Veiculo novoVeiculo = new Veiculo
             {
-                Placa = placa
+                Placa = placa,
+                Modelo = modelo
             };
 
             veiculos.Add(novoVeiculo);
